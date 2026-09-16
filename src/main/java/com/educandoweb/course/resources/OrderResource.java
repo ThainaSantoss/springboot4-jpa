@@ -2,6 +2,7 @@ package com.educandoweb.course.resources;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,15 @@ public class OrderResource {
 	}
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Order> findById(@PathVariable Long id) {
-		Order obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+
+	    Order obj = service.findById(id);
+
+	    System.out.println(
+	        "RESOURCE - items inicializado? "
+	        + Hibernate.isInitialized(obj.getItems())
+	    );
+
+	    return ResponseEntity.ok().body(obj);
 	}
 	
 }
